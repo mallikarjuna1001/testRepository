@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:aggregators="http://www.mulesoft.org/schema/mule/aggregators" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/aggregators http://www.mulesoft.org/schema/mule/aggregators/current/mule-aggregators.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="dc01a66c-7ec3-47a2-9211-3b94dca338cc" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="40e0dee6-cc33-4dbe-8a97-da1d69929541" >
+		<db:generic-connection url="jdbc:postgresql://localhost:5432/postgres" driverClassName="org.postgresql.Driver" user="postgres" password="password" />
+	</db:config>
+	<flow name="sample2Flow" doc:id="f3a0863d-2da5-4604-962a-fb54ab701f81" >
+		<http:listener doc:name="Listener" doc:id="52908efb-f3db-467d-a333-ac4e13b18223" config-ref="HTTP_Listener_config" path="testRepository"/>
+		<set-payload value="My First Repository" doc:name="Set Payload" doc:id="afed7aab-4ee8-4796-a8c3-6dbdcf6d4960" />
+		<logger level="INFO" doc:name="Logger" doc:id="dd43795b-7f05-4d9c-a4a8-727ee29f9d54" message="#[payload]"/>
+	</flow>
+</mule>
